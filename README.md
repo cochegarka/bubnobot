@@ -27,7 +27,12 @@ const proxyStr = "yourproxy"
 
 Как запустить
 -------------
-```bash
-go install
-bubnobot
-```
+1. Заходим в папку с исходным кодом, в каталог cmd/bubnobot.
+2. Пишем:
+	```bash
+	go install
+	```
+3. Ура, можем запускать при из консоли, набирая
+   ```bash
+   bubnobot
+   ```
