@@ -16,6 +16,10 @@ func main() {
 	bubnobot.APIToken = token
 	bubnobot.Port = port
 
+	if port == "" {
+		bubnobot.Port = "8000"
+	}
+
 	bot, err := bubnobot.NewBubnoBot()
 	if err != nil {
 		log.Fatal(err)
