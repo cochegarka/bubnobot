@@ -9,11 +9,14 @@ import (
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api"
 )
 
-const (
-	// Token to access HTTP Bot API
-	apiToken  = "1337:dyadyabogdan"
-	ourChatID = -111222333444555
+var (
+	// APIToken represents token to access HTTP Bot API
+	APIToken = ""
+	// Port ...
+	Port = ""
 )
+
+const ourChatID = -1001261850458
 
 // BubnoBot is love, BubnoBot is life.
 type BubnoBot struct {
@@ -35,7 +38,7 @@ func NewBubnoBot() (*BubnoBot, error) {
 
 // NewBubnoBotWithClient ...
 func NewBubnoBotWithClient(client *http.Client) (*BubnoBot, error) {
-	bot, err := tgbotapi.NewBotAPIWithClient(apiToken, client)
+	bot, err := tgbotapi.NewBotAPIWithClient(APIToken, client)
 	if err != nil {
 		return &BubnoBot{}, err
 	}
@@ -56,13 +59,20 @@ func (b *BubnoBot) Start() error {
 	b.bot.Debug = b.Debug
 	b.bot.Send(tgbotapi.NewMessage(ourChatID, b.GreetingMessage))
 
-	u := tgbotapi.NewUpdate(0)
-	u.Timeout = 60
-
-	updates, err := b.bot.GetUpdatesChan(u)
+	_, err := b.bot.SetWebhook(tgbotapi.NewWebhook("https://bubnobot.herokuapp.com/" + b.bot.Token))
 	if err != nil {
 		return err
 	}
+	info, err := b.bot.GetWebhookInfo()
+	if err != nil {
+		return err
+	}
+	if info.LastErrorDate != 0 {
+		log.Printf("Telegram callback failed: %s", info.LastErrorMessage)
+	}
+
+	updates := b.bot.ListenForWebhook("/" + b.bot.Token)
+	go http.ListenAndServe(":"+Port, nil)
 
 	for update := range updates {
 		if update.Message == nil {

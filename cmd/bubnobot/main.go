@@ -2,24 +2,21 @@ package main
 
 import (
 	"log"
-	"net/http"
-	"net/url"
+	"os"
 
-	"bitbucket.org/MegaDeathLightsaber/bubnobot"
+	bubnobot "bubnobot_heroku"
 )
 
-const proxyStr = "yourproxy"
-
 func main() {
-	// Bypass the blocking of Telegram
-	proxyURL, err := url.Parse(proxyStr)
-	if err != nil {
-		log.Fatal(err)
-	}
+	var (
+		port  = os.Getenv("PORT")
+		token = os.Getenv("TOKEN")
+	)
 
-	client := &http.Client{Transport: &http.Transport{Proxy: http.ProxyURL(proxyURL)}}
+	bubnobot.APIToken = token
+	bubnobot.Port = port
 
-	bot, err := bubnobot.NewBubnoBotWithClient(client)
+	bot, err := bubnobot.NewBubnoBot()
 	if err != nil {
 		log.Fatal(err)
 	}
