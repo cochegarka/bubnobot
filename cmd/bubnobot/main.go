@@ -30,6 +30,7 @@ func main() {
 
 	bot.AddCommand("pashok", bubnobot.PashokCommand{})
 	bot.AddCommand("ask", bubnobot.AskCommand{})
+	bot.AddCommand("dab", bubnobot.DabCommand{})
 
 	if err = bot.Start(); err != nil {
 		log.Fatal(err)
