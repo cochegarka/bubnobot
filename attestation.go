@@ -15,7 +15,18 @@ type AttestationCommand struct {
 
 // Call ...
 func (d AttestationCommand) call(bot *tgbotapi.BotAPI, message *tgbotapi.Message) {
-	response := fmt.Sprintf("%d баллов", rand.Intn(maxMark))
+	mark := rand.Intn(maxMark)
+	declension := "баллов"
+
+	if mark < 10 || mark > 20 {
+		if mark%10 >= 2 && mark%10 <= 4 {
+			declension = "балла"
+		} else if mark%10 == 1 {
+			declension = "балл"
+		}
+	}
+
+	response := fmt.Sprintf("%d %s", mark, declension)
 
 	msg := tgbotapi.NewMessage(message.Chat.ID, response)
 	bot.Send(msg)
