@@ -57,7 +57,7 @@ func (b *BubnoBot) Start() error {
 	rand.Seed(time.Now().UnixNano())
 
 	b.bot.Debug = b.Debug
-	b.bot.Send(tgbotapi.NewMessage(ourChatID, b.GreetingMessage))
+	// b.bot.Send(tgbotapi.NewMessage(ourChatID, b.GreetingMessage))
 
 	_, err := b.bot.SetWebhook(tgbotapi.NewWebhook("https://bubnobot.herokuapp.com/" + b.bot.Token))
 	if err != nil {
