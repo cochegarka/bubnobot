@@ -32,6 +32,7 @@ func main() {
 	bot.AddCommand("ask", bubnobot.AskCommand{})
 	bot.AddCommand("dab", bubnobot.DabCommand{})
 	bot.AddCommand("attestation", bubnobot.AttestationCommand{})
+	bot.AddCommand("bullshit", bubnobot.BullshitCommand{})
 
 	if err = bot.Start(); err != nil {
 		log.Fatal(err)
