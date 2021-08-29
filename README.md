@@ -8,7 +8,9 @@
 Как установить
 --------------
 ```bash
-go get bitbucket.org/MegaDeathLightsaber/bubnobot
+git clone https://github.com/cochegarka/bubnobot.git
+cd bubnobot
+go mod init
 ```
 
 Потом в исходном коде вставить свой токен и привязку к чату:
